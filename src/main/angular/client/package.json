@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href=/jam-prj/",
+    "build": "ng build",
     "postbuild": "npm run deploy",
     "deploy": "mv dist/*.* ../../webapp",
     "test": "ng test",
