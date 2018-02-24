@@ -21,6 +21,7 @@ public class ContactDao {
 	
 	@EJB
 	MongoClientProvider mongoClientProvider;
+	
 	public List<Contact> getAll() {
 		
 		List<Contact> list = new ArrayList<Contact>();
