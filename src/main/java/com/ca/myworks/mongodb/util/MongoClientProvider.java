@@ -34,11 +34,12 @@ public class MongoClientProvider {
 		init();
 	}
 
+	@SuppressWarnings("deprecation")
 	@PostConstruct
 	private void init() {
 
 		if (HOST == null) {
-			mongoClient = new MongoClient(new ServerAddress("localhost", 27017));
+			mongoClient = new MongoClient(new ServerAddress("mongodb", 27017));
 			return;
 		}
 		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE,
