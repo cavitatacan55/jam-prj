@@ -23,7 +23,7 @@ public class MongoClientProvider {
 	private final static String MONGODB_USER = System.getenv("MONGODB_USER");
 	private final static String MONGODB_PASSWORD = System.getenv("MONGODB_PASSWORD");
 	public  final static String DATABASE = System.getenv("MONGODB_DATABASE");
-	//public final static String DATABASE = "cvbank";
+	//public final static String DATABASE = "test";
 	private final static String HOST = System.getenv("MONGODB_SERVICE_HOST");
 	//private final static String HOST = "localhost";
 	private final static int PORT = Integer.decode(System.getenv("MONGODB_SERVICE_PORT"));
