@@ -8,6 +8,8 @@ public class Contact {
 	private String name;
 	private String email;
 	private String phone;
+	
+	
 	public ObjectId get_id() {
 		return _id;
 	}
