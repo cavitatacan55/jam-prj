@@ -15,7 +15,7 @@ public class ContactMapper {
 
 	public Contact fromDocument(Document document) {
 		Contact entry = new Contact();
-		entry.set_id(document.getObjectId(ATTR_ID));
+		entry.set_id(document.getObjectId(ATTR_ID).toHexString());
 		entry.setName(document.getString(ATTR_NAME));
 		entry.setEmail(document.getString(ATTR_EMAIL));
 		entry.setPhone(document.getString(ATTR_PHONE));

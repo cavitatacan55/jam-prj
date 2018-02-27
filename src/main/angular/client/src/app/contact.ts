@@ -1,6 +1,6 @@
 export class Contact {
     
-    _id   : object;
+    _id   : string;
     name  : string;
     emai  : string;
     phone : string;
