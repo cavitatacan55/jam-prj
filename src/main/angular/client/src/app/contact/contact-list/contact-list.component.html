@@ -1,0 +1,23 @@
+<div class="panel panel-primary">
+        <div class="panel-heading">My Contacts - ReastEasy Api / Mongodb</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let contact of contacts">
+                        <td>{{contact._id}}</td>
+                        <td>{{contact.name}}</td>
+                        <td>{{contact.email}}</td>
+                        <td>{{contact.phone}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
