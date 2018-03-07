@@ -53,12 +53,18 @@ public class ContactResource {
 	
 	
 	@DELETE
+	@Path("/delete/{id}")
+	public void  delete(@PathParam("id") String id) {
+	
+		dao.delete(new ObjectId(id));
+	}
+
+	@DELETE
 	@Path("/delete")
 	public void  delete(Contact c) {
 	
 		dao.delete(c);
 	}
-	
 	@PUT
 	@Path("/update")
 	public void update(Contact c) {

@@ -48,6 +48,14 @@ public class ContactDao {
     	collection.deleteOne(mapper.toDocument(entry));
     }
     
+    public void delete(ObjectId id) {
+    	
+    	MongoCollection<Document> collection = mongoClientProvider.getMongoClient().getDatabase(mongoClientProvider.DATABASE).getCollection(COLLECTION_NAME);
+    	
+    	Contact cnt = findById(id);
+    	if (cnt != null) collection.deleteOne(mapper.toDocument(cnt));
+    }
+    
     public void update(Contact entry) {
     	MongoCollection<Document> collection = mongoClientProvider.getMongoClient().getDatabase(mongoClientProvider.DATABASE).getCollection(COLLECTION_NAME);
     	

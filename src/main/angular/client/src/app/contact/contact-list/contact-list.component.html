@@ -1,23 +1,37 @@
+
 <div class="panel panel-primary">
-        <div class="panel-heading">My Contacts - ReastEasy Api / Mongodb</div>
-        <div class="panel-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let contact of contacts">
-                        <td>{{contact._id}}</td>
-                        <td>{{contact.name}}</td>
-                        <td>{{contact.email}}</td>
-                        <td>{{contact.phone}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<div class="panel-heading" align="center">
+		<b>My Contacts</b>
+	</div>
+	<button (click)="newContact()" class="btn btn-outline-danger mb-1 btn-sm">New</button>
+	<div class="panel-body">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Phone</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let contact of contacts">
+					<td>{{contact._id}}</td>
+					<td>{{contact.name}}</td>
+					<td>{{contact.email}}</td>
+					<td>{{contact.phone}}</td>
+					<td><span class="float-right">
+							<button (click)="editContact(contact)"
+								class="btn btn-outline-warning mb-1 btn-sm">Edit</button>
+
+							<button (click)="deleteContact(contact)"
+								class="btn btn-outline-danger mb-1 btn-sm">Delete</button>
+
+					</span></td>
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
