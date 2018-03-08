@@ -639,7 +639,7 @@ var ContactService = /** @class */ (function () {
         return this.httpClient.put("/ws/contacts/update", cnt);
     };
     ContactService.prototype.deleteContact = function (cnt) {
-        return this.httpClient.delete("/ws/contacts/" + cnt._id).subscribe(function (res) { console.log(res); }, function (err) { console.log("Error occured - delete"); });
+        return this.httpClient.delete("/ws/contacts/delete" + cnt._id).subscribe(function (res) { console.log(res); }, function (err) { console.log("Error occured - delete"); });
         ;
     };
     ContactService = __decorate([

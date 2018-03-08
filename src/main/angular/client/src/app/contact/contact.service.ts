@@ -24,7 +24,7 @@ export class ContactService {
     
     deleteContact(cnt: Contact) {
         
-        return this.httpClient.delete("/ws/contacts/"+ cnt._id).subscribe(res=>{console.log(res);}, err=>{console.log("Error occured - delete");});;
+        return this.httpClient.delete("/ws/contacts/delete"+ cnt._id).subscribe(res=>{console.log(res);}, err=>{console.log("Error occured - delete");});;
     }
     
 }
