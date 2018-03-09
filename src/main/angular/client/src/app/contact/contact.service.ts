@@ -26,5 +26,4 @@ export class ContactService {
         
         return this.httpClient.delete("/ws/contacts/delete/"+ cnt._id).subscribe(res=>{console.log(res);}, err=>{console.log("Error occured - delete");});;
     }
-    
 }
