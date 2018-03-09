@@ -44,6 +44,7 @@ public class MongoClientProvider {
 		}
 		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE,
 				MONGODB_PASSWORD.toCharArray());
+		
 		ServerAddress srvadr = new ServerAddress(HOST, PORT);
 		List<MongoCredential> credentials = new ArrayList<MongoCredential>();
 		credentials.add(credential);

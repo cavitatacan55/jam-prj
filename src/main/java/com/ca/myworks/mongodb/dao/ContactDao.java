@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import com.ca.myworks.mongodb.util.MongoClientProvider;
 import com.ca.myworks.mongodb.map.ContactMapper;
@@ -12,6 +13,9 @@ import com.ca.myworks.mongodb.model.Contact;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 
 @Stateless
 public class ContactDao {
@@ -22,11 +26,14 @@ public class ContactDao {
 	@EJB
 	MongoClientProvider mongoClientProvider;
 	
+	
+
 	public List<Contact> getAll() {
 		
 		List<Contact> list = new ArrayList<Contact>();
 		
-		MongoCollection<Document> collection = mongoClientProvider.getMongoClient().getDatabase(mongoClientProvider.DATABASE).getCollection(COLLECTION_NAME);
+    	MongoCollection<Document> collection = mongoClientProvider.getMongoClient().getDatabase(mongoClientProvider.DATABASE).getCollection(COLLECTION_NAME);
+		
 		FindIterable<Document> documents = collection.find();
 		for (Document document : documents) {
             list.add(mapper.fromDocument(document));
@@ -41,25 +48,24 @@ public class ContactDao {
     	
     	collection.insertOne(mapper.toDocument(entry));
     }
-    
-    public void delete(Contact entry) {
-    	MongoCollection<Document> collection = mongoClientProvider.getMongoClient().getDatabase(mongoClientProvider.DATABASE).getCollection(COLLECTION_NAME);
-    	
-    	collection.deleteOne(mapper.toDocument(entry));
-    }
+       
     
     public void delete(ObjectId id) {
     	
     	MongoCollection<Document> collection = mongoClientProvider.getMongoClient().getDatabase(mongoClientProvider.DATABASE).getCollection(COLLECTION_NAME);
-    	
-    	Contact cnt = findById(id);
-    	if (cnt != null) collection.deleteOne(mapper.toDocument(cnt));
-    }
+        Bson filter = Filters.eq("_id", id);
+        DeleteResult rslt = collection.deleteOne(filter);
+        System.out.println("Deleted Record count" + rslt);
+       }
     
     public void update(Contact entry) {
-    	MongoCollection<Document> collection = mongoClientProvider.getMongoClient().getDatabase(mongoClientProvider.DATABASE).getCollection(COLLECTION_NAME);
     	
-    	collection.updateOne(new Document("_id", entry.get_id()), new Document("$set", mapper.toDocument(entry)));
+    	MongoCollection<Document> collection = mongoClientProvider.getMongoClient().getDatabase(mongoClientProvider.DATABASE).getCollection(COLLECTION_NAME);
+    	Document doc = mapper.toDocument(entry);
+    	doc.remove("_id"); 
+    	Bson filter = Filters.eq("_id", new ObjectId(entry.get_id()));
+    	UpdateResult rslt = collection.replaceOne(filter, doc);
+    	System.out.println("Updated Record count" + rslt);
     }
     
     public Contact findById(ObjectId id) {	

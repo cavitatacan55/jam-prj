@@ -24,6 +24,7 @@ public class ContactMapper {
 	}
 
 	public Document toDocument(Contact entry) {
+		
 		Document document = new Document();
 		if (entry.get_id() != null) {
 			document.append(ATTR_ID, entry.get_id());

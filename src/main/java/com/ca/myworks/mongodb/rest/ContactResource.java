@@ -14,7 +14,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-
 import org.bson.types.ObjectId;
 
 import com.ca.myworks.mongodb.dao.ContactDao;
@@ -28,49 +27,41 @@ public class ContactResource {
 
 	@EJB
 	ContactDao dao;
-	
+
 	@GET()
 	@Path("/getAll")
 	public List<Contact> getAll() {
 		return dao.getAll();
-		
+
 	}
-	
-		
+
 	@GET
 	@Path("/{id}")
 	public Contact get(@PathParam("id") String id) {
-		
+
 		return dao.findById(new ObjectId(id));
 	}
-	
+
 	@POST
 	@Path("/add")
 	public void add(Contact c) {
-		
+
 		dao.save(c);
-	}
-	
-	
-	@DELETE
-	@Path("/delete/{id}")
-	public void  delete(@PathParam("id") String id) {
-	
-		dao.delete(new ObjectId(id));
 	}
 
 	@DELETE
-	@Path("/delete")
-	public void  delete(Contact c) {
-	
-		dao.delete(c);
+	@Path("/delete/{id}")
+	public void delete(@PathParam("id") String id) {
+
+		dao.delete(new ObjectId(id));
+
 	}
+
 	@PUT
 	@Path("/update")
 	public void update(Contact c) {
-		
+
 		dao.update(c);
 	}
-	
-	
+
 }
