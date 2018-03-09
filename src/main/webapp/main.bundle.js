@@ -280,7 +280,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/contact/contact-edit/contact-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  contact-edit works!\n</p>\n"
+module.exports = "<div class=\"container\">\n    <h1>Update Contact</h1>\n    <form (ngSubmit)=\"onSubmit()\" #contactForm=\"ngForm\">\n        <div class=\"form-group\">\n            <label for=\"name\">Name</label> <input type=\"text\"\n                class=\"form-control\" id=\"name\" required [(ngModel)]=\"contact.name\"\n                name=\"name\" #name=\"ngModel\">\n            <div [hidden]=\"name.valid || name.pristine\"\n                class=\"alert alert-danger\">Name is required</div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"email\">Email</label> <input type=\"text\"\n                class=\"form-control\" id=\"email\" required [(ngModel)]=\"contact.email\"\n                name=\"email\" #email=\"ngModel\">\n            <div [hidden]=\"email.valid || email.pristine\"\n                class=\"alert alert-danger\">Email is required</div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"phone\">Phone</label> <input type=\"text\"\n                class=\"form-control\" id=\"phne\" required [(ngModel)]=\"contact.phone\"\n                name=\"phone\" #phone=\"ngModel\">\n            <div [hidden]=\"phone.valid || phone.pristine\"\n                class=\"alert alert-danger\">Phone is required</div>\n            <button type=\"submit\" class=\"btn btn-success\"\n                [disabled]=\"!contactForm.form.valid\">Submit</button>\n        </div>\n    </form>\n</div>"
 
 /***/ }),
 
@@ -290,6 +290,9 @@ module.exports = "<p>\n  contact-edit works!\n</p>\n"
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactEditComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data__ = __webpack_require__("../../../../../src/app/contact/data.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__contact_service__ = __webpack_require__("../../../../../src/app/contact/contact.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -300,10 +303,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var ContactEditComponent = /** @class */ (function () {
-    function ContactEditComponent() {
+    function ContactEditComponent(data, router, contactService) {
+        this.data = data;
+        this.router = router;
+        this.contactService = contactService;
+        this.submitted = false;
     }
     ContactEditComponent.prototype.ngOnInit = function () {
+        this.contact = this.data.selectedContact;
+    };
+    ContactEditComponent.prototype.onSubmit = function () {
+        this.submitted = true;
+        this.contactService.updateContact(this.contact);
+        this.router.navigate(["contacts"]);
     };
     ContactEditComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -311,7 +327,7 @@ var ContactEditComponent = /** @class */ (function () {
             template: __webpack_require__("../../../../../src/app/contact/contact-edit/contact-edit.component.html"),
             styles: [__webpack_require__("../../../../../src/app/contact/contact-edit/contact-edit.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__data__["a" /* Data */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */], __WEBPACK_IMPORTED_MODULE_3__contact_service__["a" /* ContactService */]])
     ], ContactEditComponent);
     return ContactEditComponent;
 }());
@@ -341,7 +357,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/contact/contact-list/contact-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"panel panel-primary\">\n\t<div class=\"panel-heading\" align=\"center\">\n\t\t<b>My Contacts</b>\n\t</div>\n\t<button (click)=\"newContact()\" class=\"btn btn-outline-danger mb-1 btn-sm\">New</button>\n\t<div class=\"panel-body\">\n\t\t<table class=\"table table-striped\">\n\t\t\t<thead>\n\t\t\t\t<tr>\n\t\t\t\t\t<th>Id</th>\n\t\t\t\t\t<th>Name</th>\n\t\t\t\t\t<th>Email</th>\n\t\t\t\t\t<th>Phone</th>\n\t\t\t\t\t<th></th>\n\t\t\t\t</tr>\n\t\t\t</thead>\n\t\t\t<tbody>\n\t\t\t\t<tr *ngFor=\"let contact of contacts\">\n\t\t\t\t\t<td>{{contact._id}}</td>\n\t\t\t\t\t<td>{{contact.name}}</td>\n\t\t\t\t\t<td>{{contact.email}}</td>\n\t\t\t\t\t<td>{{contact.phone}}</td>\n\t\t\t\t\t<td><span class=\"float-right\">\n\t\t\t\t\t\t\t<button (click)=\"editContact(contact)\"\n\t\t\t\t\t\t\t\tclass=\"btn btn-outline-warning mb-1 btn-sm\">Edit</button>\n\n\t\t\t\t\t\t\t<button (click)=\"deleteContact(contact)\"\n\t\t\t\t\t\t\t\tclass=\"btn btn-outline-danger mb-1 btn-sm\">Delete</button>\n\n\t\t\t\t\t</span></td>\n\n\t\t\t\t</tr>\n\t\t\t</tbody>\n\t\t</table>\n\t</div>\n</div>\n"
+module.exports = "\n<div class=\"panel panel-primary\">\n\t<div class=\"panel-heading\" align=\"center\">\n\t\t<h1>My-Contacts</h1>\n\t</div>\n\t<button (click)=\"newContact()\" class=\"btn btn-outline-primary mb-1 btn-sm\">New</button>\n\t<div class=\"panel-body\">\n\t\t<table class=\"table table-striped\">\n\t\t\t<thead>\n\t\t\t\t<tr>\n\t\t\t\t\t\n\t\t\t\t\t<th>Name</th>\n\t\t\t\t\t<th>Email</th>\n\t\t\t\t\t<th>Phone</th>\n\t\t\t\t\t<th></th>\n\t\t\t\t</tr>\n\t\t\t</thead>\n\t\t\t<tbody>\n\t\t\t\t<tr *ngFor=\"let contact of contacts\">\n\t\t\t\t\t\n\t\t\t\t\t<td>{{contact.name}}</td>\n\t\t\t\t\t<td>{{contact.email}}</td>\n\t\t\t\t\t<td>{{contact.phone}}</td>\n\t\t\t\t\t<td><span class=\"float-right\">\n\t\t\t\t\t\t\t<button (click)=\"editContact(contact)\"\n\t\t\t\t\t\t\t\tclass=\"btn btn-outline-warning mb-1 btn-sm\">Edit</button>\n\n\t\t\t\t\t\t\t<button (click)=\"deleteContact(contact)\"\n\t\t\t\t\t\t\t\tclass=\"btn btn-outline-danger mb-1 btn-sm\">Delete</button>\n\n\t\t\t\t\t</span></td>\n\n\t\t\t\t</tr>\n\t\t\t</tbody>\n\t\t</table>\n\t</div>\n</div>\n"
 
 /***/ }),
 
@@ -636,7 +652,7 @@ var ContactService = /** @class */ (function () {
         this.httpClient.post("/ws/contacts/add", cnt).subscribe(function (res) { console.log(res); }, function (err) { console.log("Error occured - add"); });
     };
     ContactService.prototype.updateContact = function (cnt) {
-        return this.httpClient.put("/ws/contacts/update", cnt);
+        return this.httpClient.put("/ws/contacts/update", cnt).subscribe(function (res) { console.log(res); }, function (err) { console.log("Error occured - add"); });
     };
     ContactService.prototype.deleteContact = function (cnt) {
         return this.httpClient.delete("/ws/contacts/delete/" + cnt._id).subscribe(function (res) { console.log(res); }, function (err) { console.log("Error occured - delete"); });
@@ -838,7 +854,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/nav/nav.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n\t<button class=\"navbar-toggler navbar-toggler-right\" type=\"button\"\n\t\tdata-toggle=\"collapse\" data-target=\"#navbarSupportedContent\"\n\t\taria-controls=\"navbarSupportedContent\" aria-expanded=\"false\"\n\t\taria-label=\"Toggle navigation\">\n\t\t<span class=\"navbar-toggler-icon\"></span>\n\t</button>\n\t<a class=\"navbar-brand\" routerLink=\"/home\">JAM</a>\n\n\t<div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n\t\t<ul class=\"navbar-nav mr-auto\">\n\t\t\t<li class=\"nav-item active\"><a class=\"nav-link\"\n\t\t\t\trouterLink=\"/home\">Home <span class=\"sr-only\">(current)</span></a></li>\n\t\t\t<li class=\"nav-item\"><a class=\"nav-link\" routerLink=\"/contacts\">Contacts</a>\n\t\t\t</li>\n\t\t\t<li class=\"nav-item\"><a class=\"nav-link disabled\" href=\"#\">Disabled</a>\n\t\t\t</li>\n\t\t</ul>\n\t\t<div class=\"dropdown\">\n\t\t\t<button class=\"btn btn-secondary dropdown-toggle\" type=\"button\"\n\t\t\t\tid=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\"\n\t\t\t\taria-expanded=\"false\">Dropdown button</button>\n\t\t\t<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n\t\t\t\t<a class=\"dropdown-item\" routerLink=\"/home\">Action</a> <a\n\t\t\t\t\tclass=\"dropdown-item\" routerLink=\"/home\">Another action</a> <a\n\t\t\t\t\tclass=\"dropdown-item\" routerLink=\"/home\">Something else here</a>\n\t\t\t</div>\n\t\t</div>\n\t\t<form class=\"form-inline my-2 my-lg-0\">\n\t\t\t<input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\">\n\t\t\t<button class=\"btn btn-outline-success my-2 my-sm-0\">Search</button>\n\t\t</form>\n\t</div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n\t<button class=\"navbar-toggler navbar-toggler-right\" type=\"button\"\n\t\tdata-toggle=\"collapse\" data-target=\"#navbarSupportedContent\"\n\t\taria-controls=\"navbarSupportedContent\" aria-expanded=\"false\"\n\t\taria-label=\"Toggle navigation\">\n\t\t<span class=\"navbar-toggler-icon\"></span>\n\t</button>\n\t<a class=\"navbar-brand\" routerLink=\"/home\">JAM</a>\n\n\t<div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n\t\t<ul class=\"navbar-nav mr-auto\">\n\t\t\t<li class=\"nav-item active\"><a class=\"nav-link\"\n\t\t\t\trouterLink=\"/home\">Home <span class=\"sr-only\">(current)</span></a></li>\n\t\t\t<li class=\"nav-item\"><a class=\"nav-link\" routerLink=\"/contacts\">Contacts</a>\n\t\t\t</li>\n\t\t\t<li class=\"nav-item\"><a class=\"nav-link disabled\" href=\"#\">Disabled</a>\n\t\t\t</li>\n\t\t</ul>\n\t\t<div class=\"dropdown\">\n\t\t\t<button class=\"btn btn-secondary dropdown-toggle\" type=\"button\"\n\t\t\t\tid=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\"\n\t\t\t\taria-expanded=\"false\">Dropdown button</button>\n\t\t\t<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n\t\t\t\t<a class=\"dropdown-item\" routerLink=\"/home\">Action</a> <a\n\t\t\t\t\tclass=\"dropdown-item\" routerLink=\"/home\">Another action</a> <a\n\t\t\t\t\tclass=\"dropdown-item\" routerLink=\"/contacts\">My Contacts</a>\n\t\t\t</div>\n\t\t</div>\n\t\t<form class=\"form-inline my-2 my-lg-0\">\n\t\t\t<input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\">\n\t\t\t<button class=\"btn btn-outline-success my-2 my-sm-0\">Search</button>\n\t\t</form>\n\t</div>\n</nav>\n"
 
 /***/ }),
 
