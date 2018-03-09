@@ -19,7 +19,7 @@ export class ContactService {
     }
     
     updateContact(cnt: Contact) {
-        return this.httpClient.put("/ws/contacts/update", cnt);
+        return this.httpClient.put("/ws/contacts/update", cnt).subscribe(res=>{console.log(res);}, err=>{console.log("Error occured - add");});
     }
     
     deleteContact(cnt: Contact) {
